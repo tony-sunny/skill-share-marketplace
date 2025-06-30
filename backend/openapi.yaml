@@ -99,14 +99,43 @@ paths:
       responses:
         "201":
           description: Skill created
-    put:
-      summary: Update a skill (provider only)
+  /skills/{id}:
+    get:
+      summary: Get a skill by ID
       parameters:
         - in: path
           name: id
           schema:
             type: integer
           required: true
+      tags:
+        - Skills
+      responses:
+        "200":
+          description: Skill details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                  - $ref: "#/components/schemas/Skill"
+    put:
+      summary: Update a skill (provider only)
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Skills
       requestBody:
         required: true
         content:
@@ -117,6 +146,51 @@ paths:
         "200":
           description: Skill updated
   /tasks:
+    get:
+      summary: List all tasks
+      tags:
+        - Tasks
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+            maximum: 100
+          description: Page number (default 1)
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+          description: Number of items per page (default 10)
+      responses:
+        "200":
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - tasks
+                  - pagination
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          required:
+                            - id
+                          properties:
+                            id:
+                              type: integer
+                        - $ref: "#/components/schemas/Task"
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
     post:
       summary: Create a task (user only)
       security:
@@ -132,6 +206,31 @@ paths:
       responses:
         "201":
           description: Task created
+  /tasks/{id}:
+    get:
+      summary: Get a task by ID
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: integer
+      tags:
+        - Tasks
+      responses:
+        "200":
+          description: Task details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    required:
+                      - id
+                    properties:
+                      id:
+                        type: integer
+                  - $ref: "#/components/schemas/Task"
     put:
       summary: Update a task (user only)
       parameters:
@@ -140,6 +239,10 @@ paths:
           schema:
             type: integer
           required: true
+      tags:
+        - Tasks
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -150,8 +253,42 @@ paths:
         "200":
           description: Task updated
   /offers:
+    get:
+      summary: List all offers for a task
+      tags:
+        - Offers
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: List of offers for a task
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - offers
+                  - pagination
+                properties:
+                  offers:
+                    type: array
+                    items:
+                      allOf:
+                        - type: object
+                          required:
+                            - id
+                          properties:
+                            id:
+                              type: integer
+                        - $ref: "#/components/schemas/Offer"
+                  pagination:
+                    $ref: "#/components/schemas/Pagination"
     post:
-      summary: Provider makes an offer
+      summary: Make an offer (provider only)
+      tags:
+        - Offers
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -161,8 +298,13 @@ paths:
       responses:
         "201":
           description: Offer created
-    put:
-      summary: Accept/Reject an offer
+  /offers/{id}/status:
+    patch:
+      summary: Accept/Reject an offer (user only)
+      tags:
+        - Offers
+      security:
+        - BearerAuth: []
       parameters:
         - in: path
           name: id
@@ -174,22 +316,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Offer"
+              $ref: "#/components/schemas/OfferStatusUpdate"
       responses:
-        "200":
-          description: Offer updated
-  /task-progress:
-    post:
-      summary: Provider updates task progress
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TaskProgress"
-      responses:
-        "201":
-          description: Task progress created
+        "204":
+          description: Offer status updated
 components:
   schemas:
     UserSignup:
@@ -303,24 +433,14 @@ components:
       properties:
         task_id:
           type: integer
-        provider_id:
-          type: integer
-        status:
-          type: string
-          enum: [pending, accepted, rejected]
-    TaskProgress:
+    OfferStatusUpdate:
       type: object
       required:
-        - task_id
-        - provider_id
-        - description
+        - status
       properties:
-        task_id:
-          type: integer
-        provider_id:
-          type: integer
-        description:
+        status:
           type: string
+          enum: [accepted, rejected]
     Pagination:
       type: object
       required:
