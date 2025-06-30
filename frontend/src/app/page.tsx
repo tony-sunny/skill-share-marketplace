@@ -15,12 +15,6 @@ export default function HomePage() {
         >
           Sing Up
         </Link>
-        <Link href="/skills" className="text-blue-600 underline">
-          Browse Skills
-        </Link>
-        <Link href="/tasks" className="text-blue-600 underline">
-          Browse Tasks
-        </Link>
       </div>
     </main>
   );

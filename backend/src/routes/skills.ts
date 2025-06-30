@@ -7,7 +7,9 @@ import { UserRole } from "../models/user";
 const skillsRouter = Router({ mergeParams: true });
 
 skillsRouter.route("/skills")
-  .get(skillsController.listSkills)
+  .get(
+    validateJWT,
+    skillsController.listSkills)
   .post(
     validateJWT,
     validateRole(UserRole.Provider),

@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { RequireAuth } from "../../lib/require-auth";
+import { useUser } from "@/lib/user-context";
+import { RequireAuth } from "@/lib/require-auth";
 import { OfferResponse, queryAPI } from "@/lib/api";
+import { OfferStatus } from "@/components/ui/offer-status";
 import { toast } from "sonner";
 
 export default function OffersPage() {
   const [offers, setOffers] = useState<OfferResponse["offers"]>([]);
+  const { user } = useUser();
 
   const updateOfferStatus = async (
     offerId: number,
@@ -48,32 +51,40 @@ export default function OffersPage() {
               key={offer.id}
               className="flex justify-between items-center border-b py-2"
             >
-              <span>
-                Task {offer.task.name}{" "}
-                {offer.provider?.first_name
-                  ? `Provider: ${offer.provider?.first_name} ${offer.provider?.last_name}`
-                  : ""}{" "}
-                ({offer.status})
+              <span className="flex items-center gap-2">
+                <span>
+                  Task {offer.task.name}{" "}
+                  {offer.provider?.first_name
+                    ? `Provider: ${offer.provider?.first_name} ${offer.provider?.last_name}`
+                    : ""}
+                </span>
+                <OfferStatus status={offer.status} />
               </span>
-              {(offer.status === "pending" || offer.status === "rejected") && (
-                <span className="flex gap-2">
-                  <button
-                    className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                    onClick={() => updateOfferStatus(offer.id, "accepted")}
-                  >
-                    Accept
-                  </button>
-                </span>
-              )}
-              {(offer.status === "pending" || offer.status === "accepted") && (
-                <span className="flex gap-2">
-                  <button
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    onClick={() => updateOfferStatus(offer.id, "rejected")}
-                  >
-                    Reject
-                  </button>
-                </span>
+              {user?.role === "user" && (
+                <>
+                  {(offer.status === "pending" ||
+                    offer.status === "rejected") && (
+                    <span className="flex gap-2">
+                      <button
+                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                        onClick={() => updateOfferStatus(offer.id, "accepted")}
+                      >
+                        Accept
+                      </button>
+                    </span>
+                  )}
+                  {(offer.status === "pending" ||
+                    offer.status === "accepted") && (
+                    <span className="flex gap-2">
+                      <button
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                        onClick={() => updateOfferStatus(offer.id, "rejected")}
+                      >
+                        Reject
+                      </button>
+                    </span>
+                  )}
+                </>
               )}
             </li>
           ))}

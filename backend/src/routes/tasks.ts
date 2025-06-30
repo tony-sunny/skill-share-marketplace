@@ -6,10 +6,12 @@ import { validateCreateTaskRequest, validateUpdateTaskRequest, validateGetTaskBy
 
 
 const tasksRouter = Router();
-// List all tasks
 
 tasksRouter.route("/tasks")
-  .get(tasksController.listTasks)
+  .get(
+    validateJWT,
+    tasksController.listTasks
+  )
   .post(
     validateJWT,
     validateRole(UserRole.User),
