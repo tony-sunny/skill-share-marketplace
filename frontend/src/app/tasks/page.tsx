@@ -43,15 +43,16 @@ export default function TasksPage() {
     <RequireAuth>
       <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
         <h2 className="text-2xl font-bold mb-4">Tasks</h2>
-
-        <div className="mb-8">
-          <Link
-            href="/tasks/new"
-            className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            Add New Task
-          </Link>
-        </div>
+        {user?.role === "user" && (
+          <div className="mb-8">
+            <Link
+              href="/tasks/new"
+              className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            >
+              Add New Task
+            </Link>
+          </div>
+        )}
         <ul className="mb-6">
           {tasks.map((task) => (
             <li

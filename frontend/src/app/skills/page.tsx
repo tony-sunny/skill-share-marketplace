@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { queryAPI, Skill, SkillResponse } from "@/lib/api";
+import { useUser } from "@/lib/user-context";
 import Link from "next/link";
 import { RequireAuth } from "@/lib/require-auth";
 
 export default function SkillsPage() {
+  const { user } = useUser();
   const [skills, setSkills] = useState<Skill[]>([]);
 
   useEffect(() => {
@@ -22,15 +24,16 @@ export default function SkillsPage() {
     <RequireAuth>
       <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
         <h2 className="text-2xl font-bold mb-4">Skills</h2>
-
-        <div className="mb-8">
-          <Link
-            href="/skills/new"
-            className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-          >
-            Add New Skill
-          </Link>
-        </div>
+        {user?.role === "provider" && (
+          <div className="mb-8">
+            <Link
+              href="/skills/new"
+              className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+            >
+              Add New Skill
+            </Link>
+          </div>
+        )}
 
         <ul className="mb-6">
           {skills.map((skill) => (
