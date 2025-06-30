@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { RequireAuth } from "../../../lib/require-auth";
 import { queryAPI, TaskByIdResponse } from "@/lib/api";
+import Fallback from "@/components/ui/fallback";
 
 export type FormState = {
   category?: string;
@@ -13,7 +14,7 @@ export type FormState = {
   expected_hours?: number;
   hourly_rate?: number;
   rate_currency?: string;
-}
+};
 
 export default function EditTaskPage() {
   const router = useRouter();
@@ -64,8 +65,7 @@ export default function EditTaskPage() {
     }
   };
 
-  if (loading || !form)
-    return <div className="p-8 text-center">Loading...</div>;
+  if (loading || !form) return <Fallback />;
 
   return (
     <RequireAuth>

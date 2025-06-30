@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { queryAPI, Skill } from "@/lib/api";
-import { RequireAuth } from "../../../lib/require-auth";
+import Fallback from "@/components/ui/fallback";
+import { RequireAuth } from "@/lib/require-auth";
 
 export default function EditSkillPage() {
   const router = useRouter();
@@ -47,8 +48,7 @@ export default function EditSkillPage() {
     }
   };
 
-  if (loading || !form)
-    return <div className="p-8 text-center">Loading...</div>;
+  if (loading || !form) return <Fallback />;
 
   return (
     <RequireAuth>

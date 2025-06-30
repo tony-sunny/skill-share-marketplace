@@ -89,15 +89,15 @@ export type TaskByIdResponse = {
 
 export type OfferResponse = {
   offers: {
-    id: number
-    status: string
-    task: Task
+    id: number;
+    status: string;
+    task: Task;
     provider?: {
-      id: number
-      first_name: string
-      last_name: string
-      email: string
-      role_type: string
-    }
-  }[]
-}
+      id: number;
+      first_name: string;
+      last_name: string;
+      email: string;
+      role_type: string;
+    };
+  }[];
+};
