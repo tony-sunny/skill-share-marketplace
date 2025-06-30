@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as taskProgressController from "../controllers/task_progress.js";
+import * as taskProgressController from "../controllers/task_progress";
 
 const taskProgressRouter = Router({ mergeParams: true });
 

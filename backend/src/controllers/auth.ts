@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { constants } from "node:http2";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { createUser, findUserByEmail } from "../models/user.js";
+import { createUser, findUserByEmail } from "../models/user";
 
 export const signUp = async (req: Request, res: Response) => {
   try {

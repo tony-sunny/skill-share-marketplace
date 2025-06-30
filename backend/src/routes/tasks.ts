@@ -1,8 +1,8 @@
 import { Router } from "express";
-import * as tasksController from "../controllers/tasks.js";
-import { validateJWT, validateRole } from "../middlewares/auth.js";
-import { UserRole } from "../models/user.js";
-import { validateCreateTaskRequest, validateUpdateTaskRequest, validateGetTaskByIdRequest } from "../middlewares/validations.js";
+import * as tasksController from "../controllers/tasks";
+import { validateJWT, validateRole } from "../middlewares/auth";
+import { UserRole } from "../models/user";
+import { validateCreateTaskRequest, validateUpdateTaskRequest, validateGetTaskByIdRequest } from "../middlewares/validations";
 
 
 const tasksRouter = Router();

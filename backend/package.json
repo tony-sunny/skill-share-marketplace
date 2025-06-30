@@ -1,12 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "start": "node -r dotenv/config .build/index.js",
     "build": "tsc",
     "build:clean": "rm -rf .build/ && tsc",
-    "migrate:create": "node-pg-migrate create -m src/migrations -j ts",
+    "migrate:create": "node-pg-migrate create -m src/migrations",
     "migrate:down": "node-pg-migrate down -m .build/migrations",
     "migrate:up": "node-pg-migrate up -m .build/migrations",
     "prettier": "prettier --write .",

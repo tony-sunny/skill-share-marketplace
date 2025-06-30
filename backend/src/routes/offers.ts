@@ -1,8 +1,8 @@
 import { Router } from "express";
-import * as offerController from "../controllers/offers.js";
-import { validateJWT, validateRole } from "../middlewares/auth.js";
-import { UserRole } from "../models/user.js";
-import { validateUpdateOrderStatusRequest } from "../middlewares/validations.js";
+import * as offerController from "../controllers/offers";
+import { validateJWT, validateRole } from "../middlewares/auth";
+import { UserRole } from "../models/user";
+import { validateUpdateOrderStatusRequest } from "../middlewares/validations";
 
 const offerRouter = Router({ mergeParams: true });
 

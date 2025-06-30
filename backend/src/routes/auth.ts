@@ -1,9 +1,9 @@
 import { Router } from "express";
-import * as authController from "../controllers/auth.js";
+import * as authController from "../controllers/auth";
 import {
   validateLoginRequest,
   validateSignUpRequest,
-} from "../middlewares/validations.js";
+} from "../middlewares/validations";
 
 const authRouter = Router({ mergeParams: true });
 

@@ -1,7 +1,7 @@
 import { constants } from "node:http2";
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import type { UserRole } from "../models/user.js";
+import type { UserRole } from "../models/user";
 
 type UserData = {
   id: number;

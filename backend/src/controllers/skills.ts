@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { constants } from "node:http2";
-import * as skillModel from "../models/skill.js";
-import type { RequestWithSession } from "../middlewares/auth.js";
+import * as skillModel from "../models/skill";
+import type { RequestWithSession } from "../middlewares/auth";
 
 export const createSkill = async (req: RequestWithSession, res: Response) => {
   try {

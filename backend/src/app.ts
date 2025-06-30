@@ -3,7 +3,7 @@ import winston from "winston";
 import expressWinston from "express-winston";
 import bodyParser from "body-parser";
 import cors from "cors";
-import router from "./routes/index.js";
+import router from "./routes/index";
 
 const app = express();
 app.use(cors());

@@ -1,8 +1,6 @@
-import type { ColumnDefinitions, MigrationBuilder } from "node-pg-migrate";
+const shorthands = undefined;
 
-export const shorthands: ColumnDefinitions | undefined = undefined;
-
-export async function up(pgm: MigrationBuilder): Promise<void> {
+export const up = (pgm) => {
   // Users table includes both users and providers
   pgm.createTable(
     "users",
@@ -159,7 +157,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
   );
 }
 
-export async function down(pgm: MigrationBuilder): Promise<void> {
+export const down = (pgm) => {
   pgm.dropTable("task_progress");
   pgm.dropTable("offers");
   pgm.dropTable("tasks");

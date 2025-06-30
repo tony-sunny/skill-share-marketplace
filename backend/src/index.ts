@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "development") {
   }
 }
 
-import app from "./app.js";
+import app from "./app";
 
 app.listen(4000, () => {
   console.log("Backend server running on port 4000");

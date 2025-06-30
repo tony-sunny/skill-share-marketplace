@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import { constants } from "node:http2";
 
-import * as taskModel from "../models/task.js";
-import type { RequestWithSession } from "../middlewares/auth.js";
+import * as taskModel from "../models/task";
+import type { RequestWithSession } from "../middlewares/auth";
 
 export const createTask = async (req: RequestWithSession, res: Response) => {
   try {

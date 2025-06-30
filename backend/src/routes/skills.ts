@@ -1,8 +1,8 @@
 import { Router } from "express";
-import * as skillsController from "../controllers/skills.js";
-import { validateCreateSkillRequest, validateGetSkillByIdRequest, validateUpdateSkillRequest } from "../middlewares/validations.js";
-import { validateJWT, validateRole } from "../middlewares/auth.js";
-import { UserRole } from "../models/user.js";
+import * as skillsController from "../controllers/skills";
+import { validateCreateSkillRequest, validateGetSkillByIdRequest, validateUpdateSkillRequest } from "../middlewares/validations";
+import { validateJWT, validateRole } from "../middlewares/auth";
+import { UserRole } from "../models/user";
 
 const skillsRouter = Router({ mergeParams: true });
 

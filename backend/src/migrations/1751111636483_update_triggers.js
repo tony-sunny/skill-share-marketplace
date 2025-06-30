@@ -1,8 +1,4 @@
-import type { ColumnDefinitions, MigrationBuilder } from "node-pg-migrate";
-
-export const shorthands: ColumnDefinitions | undefined = undefined;
-
-export async function up(pgm: MigrationBuilder): Promise<void> {
+export const up = (pgm) => {
   pgm.sql(`
     CREATE OR REPLACE FUNCTION set_current_timestamp_updated_at()
     RETURNS TRIGGER AS $$
@@ -49,7 +45,7 @@ export async function up(pgm: MigrationBuilder): Promise<void> {
   `);
 }
 
-export async function down(pgm: MigrationBuilder): Promise<void> {
+export const down = (pgm) => {
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON users;`);
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON skills;`);
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON tasks;`);

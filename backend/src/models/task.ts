@@ -1,5 +1,5 @@
-import pool from "../db.js";
-import type { Category } from "./skill.js";
+import pool from "../db";
+import type { Category } from "./skill";
 
 export enum Currency {
   USD = "USD",

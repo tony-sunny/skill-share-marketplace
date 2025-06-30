@@ -1,9 +1,9 @@
 import express from "express";
-import authRouter from "./auth.js";
-import offerRouter from "./offers.js";
-import skillsRouter from "./skills.js";
-import taskProgressRouter from "./task_progress.js";
-import tasksRouter from "./tasks.js";
+import authRouter from "./auth";
+import offerRouter from "./offers";
+import skillsRouter from "./skills";
+import taskProgressRouter from "./task_progress";
+import tasksRouter from "./tasks";
 
 const router = express.Router();
 

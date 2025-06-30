@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import * as taskProgressModel from "../models/task_progress.js";
+import * as taskProgressModel from "../models/task_progress";
 
 export const updateTaskProgress = async (req: Request, res: Response) => {
   try {

@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import { constants } from "node:http2";
-import * as offerModel from "../models/offer.js";
-import type { RequestWithSession } from "../middlewares/auth.js";
-import { UserRole } from "../models/user.js";
+import * as offerModel from "../models/offer";
+import type { RequestWithSession } from "../middlewares/auth";
+import { UserRole } from "../models/user";
 
 export const createOffer = async (req: RequestWithSession, res: Response) => {
   try {

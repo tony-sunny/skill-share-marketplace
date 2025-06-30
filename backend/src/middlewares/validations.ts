@@ -1,10 +1,10 @@
 import { constants } from "node:http2";
 import type { Request, Response, NextFunction, RequestHandler } from "express";
 import { validationResult, body, query, param } from "express-validator";
-import { RoleType, UserRole } from "../models/user.js";
-import { WorkNature, Category } from "../models/skill.js";
-import { Currency } from "../models/task.js";
-import { OfferStatus } from "../models/offer.js";
+import { RoleType, UserRole } from "../models/user";
+import { WorkNature, Category } from "../models/skill";
+import { Currency } from "../models/task";
+import { OfferStatus } from "../models/offer";
 
 const applyValidation = (
   httpStatusCode = constants.HTTP_STATUS_BAD_REQUEST,
