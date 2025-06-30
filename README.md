@@ -21,28 +21,20 @@ npm run dev
 ```
 
 ### Backend
+
+#### Ensure dependencies
+- Ensure node v22 is available.
+- Ensure PostgreSQL is running and accessible.
+- Add necessary environment variables by c
+
 ```
 cd backend
 npm install
-npm run dev
+npm run build
+npm run start
 ```
 
-### Database
-- Ensure PostgreSQL is running and accessible.
-- Configure your database connection in the backend.
-- Use `node-pg-migrate` for migrations.
-
-## Features
-- Provider/User signup & login
-- Task and skill management
-- Offer and task progress workflows
-- RESTful API with OpenAPI spec
-
-## Development
-- Use TypeScript everywhere
-- Follow RESTful best practices
-- Add tests for backend and frontend
-
----
-
-For more details, see the requirements in `requirements.txt`.
+#### Migrations
+```
+DATABASE_URL=<url> npm run migrate:up
+```
