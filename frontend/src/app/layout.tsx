@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { UserProvider } from "../lib/user-context";
 import { UserInfoNav } from "../lib/user-info-nav";

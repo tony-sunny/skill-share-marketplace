@@ -14,7 +14,7 @@ export default function TaskProgressPage() {
 
   useEffect(() => {
     if (!taskId) return;
-    queryAPI(`tasks/${taskId}/progress`)
+    queryAPI<any>(`tasks/${taskId}/progress`)
       .then((data) => {
         setProgress(data?.progress || "No progress yet.");
         setLoading(false);
