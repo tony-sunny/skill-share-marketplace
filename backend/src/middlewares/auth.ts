@@ -13,7 +13,7 @@ export type RequestWithSession = Request & {
   session?: UserData;
 };
 
-export const validateJWT = async (
+export const authenticateReq = async (
   req: RequestWithSession,
   res: Response,
   next: NextFunction,
@@ -42,7 +42,7 @@ export const validateJWT = async (
   }
 };
 
-export const validateRole = (role: UserRole) => {
+export const authorizeReq = (role: UserRole) => {
   return (req: RequestWithSession, res: Response, next: NextFunction) => {
     if (req.session?.role !== role) {
       res.status(constants.HTTP_STATUS_FORBIDDEN).json({ error: "Forbidden" });
@@ -51,3 +51,12 @@ export const validateRole = (role: UserRole) => {
     next();
   };
 };
+
+export const authenticateAndAuthorizeReq = (
+  role: UserRole,
+) => {
+  return [
+    authenticateReq,
+    authorizeReq(role),
+  ]
+}

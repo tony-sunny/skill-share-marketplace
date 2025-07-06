@@ -5,17 +5,16 @@ import {
   validateGetSkillByIdRequest,
   validateUpdateSkillRequest,
 } from "../middlewares/validations";
-import { validateJWT, validateRole } from "../middlewares/auth";
+import { authenticateReq, authenticateAndAuthorizeReq } from "../middlewares/auth";
 import { UserRole } from "../models/user";
 
 const skillsRouter = Router({ mergeParams: true });
 
 skillsRouter
   .route("/skills")
-  .get(validateJWT, skillsController.listSkills)
+  .get(authenticateReq, skillsController.listSkills)
   .post(
-    validateJWT,
-    validateRole(UserRole.Provider),
+    authenticateAndAuthorizeReq(UserRole.Provider),
     validateCreateSkillRequest(),
     skillsController.createSkill,
   );
@@ -24,8 +23,7 @@ skillsRouter
   .route("/skills/:id")
   .get(validateGetSkillByIdRequest(), skillsController.getSkillById)
   .put(
-    validateJWT,
-    validateRole(UserRole.Provider),
+    authenticateAndAuthorizeReq(UserRole.Provider),
     validateUpdateSkillRequest(),
     skillsController.updateSkill,
   );

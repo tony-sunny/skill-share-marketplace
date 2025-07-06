@@ -1,13 +1,13 @@
 import express from "express";
 import winston from "winston";
 import expressWinston from "express-winston";
-import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes/index";
 
 const app = express();
+app.disable("x-powered-by");
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(
   expressWinston.logger({

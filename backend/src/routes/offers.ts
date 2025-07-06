@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as offerController from "../controllers/offers";
-import { validateJWT, validateRole } from "../middlewares/auth";
+import { authenticateAndAuthorizeReq, authenticateReq } from "../middlewares/auth";
 import { UserRole } from "../models/user";
 import { validateUpdateOrderStatusRequest } from "../middlewares/validations";
 
@@ -8,18 +8,16 @@ const offerRouter = Router({ mergeParams: true });
 
 offerRouter
   .route("/offers")
-  .get(validateJWT, offerController.listOffers)
+  .get(authenticateReq, offerController.listOffers)
   .post(
-    validateJWT,
-    validateRole(UserRole.Provider),
+    authenticateAndAuthorizeReq(UserRole.Provider),
     offerController.createOffer,
   );
 
 offerRouter
   .route("/offers/:id/status")
   .patch(
-    validateJWT,
-    validateRole(UserRole.User),
+    authenticateAndAuthorizeReq(UserRole.User),
     validateUpdateOrderStatusRequest(),
     offerController.updateOfferStatus,
   );

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as tasksController from "../controllers/tasks";
-import { validateJWT, validateRole } from "../middlewares/auth";
+import { authenticateReq, authenticateAndAuthorizeReq } from "../middlewares/auth";
 import { UserRole } from "../models/user";
 import {
   validateCreateTaskRequest,
@@ -13,10 +13,9 @@ const tasksRouter = Router();
 
 tasksRouter
   .route("/tasks")
-  .get(validateJWT, tasksController.listTasks)
+  .get(authenticateReq, tasksController.listTasks)
   .post(
-    validateJWT,
-    validateRole(UserRole.User),
+    authenticateAndAuthorizeReq(UserRole.User),
     validateCreateTaskRequest(),
     tasksController.createTask,
   );
@@ -25,8 +24,7 @@ tasksRouter
   .route("/tasks/:id")
   .get(validateGetTaskByIdRequest(), tasksController.getTaskById)
   .put(
-    validateJWT,
-    validateRole(UserRole.User),
+    authenticateAndAuthorizeReq(UserRole.User),
     validateUpdateTaskRequest(),
     tasksController.updateTask,
   );
@@ -34,8 +32,7 @@ tasksRouter
 tasksRouter
   .route("/tasks/:id/progress")
   .patch(
-    validateJWT,
-    validateRole(UserRole.User),
+    authenticateAndAuthorizeReq(UserRole.Provider),
     validateUpdateTaskProgressRequest(),
     tasksController.updateTaskProgress,
   );

@@ -11,7 +11,7 @@ export enum Currency {
 export enum TaskStatus {
   Open = "open",
   Completed = "completed",
-  Accepted = "Accepted",
+  Accepted = "accepted",
 }
 
 export interface Task {
@@ -24,7 +24,7 @@ export interface Task {
   expected_hours?: number;
   hourly_rate: number;
   rate_currency: Currency;
-  status: string;
+  status: TaskStatus;
   created_at: Date;
   updated_at: Date;
 }
@@ -72,13 +72,11 @@ export async function listTasks({
   return result.rows;
 }
 
-// Count all tasks
 export async function countTasks() {
   const result = await pool.query(`SELECT COUNT(*) FROM tasks`);
   return parseInt(result.rows[0].count, 10);
 }
 
-// Get a single task by id
 export async function getTaskById(id: number) {
   const result = await pool.query(`SELECT * FROM tasks WHERE id = $1`, [id]);
   return result.rows[0] || null;
