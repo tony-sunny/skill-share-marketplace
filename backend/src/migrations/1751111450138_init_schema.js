@@ -155,7 +155,7 @@ export const up = (pgm) => {
     },
     { ifNotExists: true },
   );
-}
+};
 
 export const down = (pgm) => {
   pgm.dropTable("task_progress");
@@ -163,4 +163,4 @@ export const down = (pgm) => {
   pgm.dropTable("tasks");
   pgm.dropTable("skills");
   pgm.dropTable("users");
-}
+};

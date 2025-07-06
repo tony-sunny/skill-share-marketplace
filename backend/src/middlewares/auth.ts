@@ -20,7 +20,9 @@ export const validateJWT = async (
 ) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    res.status(constants.HTTP_STATUS_UNAUTHORIZED).json({ error: "Unauthorized" });
+    res
+      .status(constants.HTTP_STATUS_UNAUTHORIZED)
+      .json({ error: "Unauthorized" });
     return;
   }
   const [_, token] = authHeader.split(" ");
@@ -33,7 +35,9 @@ export const validateJWT = async (
     };
     return next();
   } catch (error) {
-    res.status(constants.HTTP_STATUS_UNAUTHORIZED).json({ error: "Invalid token" });
+    res
+      .status(constants.HTTP_STATUS_UNAUTHORIZED)
+      .json({ error: "Invalid token" });
     return;
   }
 };

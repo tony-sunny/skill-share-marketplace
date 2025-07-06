@@ -36,7 +36,8 @@ export async function updateOfferStatus(
 }
 
 export async function listOffersForUser(userId: number) {
-  const result = await pool.query(`
+  const result = await pool.query(
+    `
     SELECT o.*, t.category as task_category, t.name as task_name, t.description as task_description, t.expected_start_date as task_expected_start_date, t.expected_hours as task_expected_hours, t.hourly_rate as task_hourly_rate, t.rate_currency as task_rate_currency, t.status as task_status,
            u.id as user_id, u.first_name as user_first_name, u.last_name as user_last_name, u.email as user_email, u.role as user_role, u.role_type as user_role_type
     FROM offers o
@@ -44,17 +45,22 @@ export async function listOffersForUser(userId: number) {
     JOIN users u ON o.provider_id = u.id
     WHERE t.user_id = $1
     ORDER BY o.id DESC
-  `, [userId]);
+  `,
+    [userId],
+  );
   return result.rows;
 }
 
 export async function listOffersFromProvider(providerId: number) {
-  const result = await pool.query(`
+  const result = await pool.query(
+    `
     SELECT o.*, t.category as task_category, t.name as task_name, t.description as task_description, t.expected_start_date as task_expected_start_date, t.expected_hours as task_expected_hours, t.hourly_rate as task_hourly_rate, t.rate_currency as task_rate_currency, t.status as task_status
     FROM offers o
     JOIN tasks t ON o.task_id = t.id
     WHERE o.provider_id = $1
     ORDER BY o.id DESC
-  `, [providerId]);
+  `,
+    [providerId],
+  );
   return result.rows;
 }

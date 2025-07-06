@@ -3,12 +3,12 @@ import pool from "../db";
 export enum Category {
   Programming = "programming",
   Design = "design",
-  Marketing = "marketing"
+  Marketing = "marketing",
 }
 
 export enum WorkNature {
   Onsite = "onsite",
-  Online = "online"
+  Online = "online",
 }
 
 export interface Skill {
@@ -53,10 +53,16 @@ export async function updateSkill(
   return result.rows[0];
 }
 
-export async function listSkills({ offset, limit }: { offset: number, limit: number }) {
+export async function listSkills({
+  offset,
+  limit,
+}: {
+  offset: number;
+  limit: number;
+}) {
   const result = await pool.query(
     `SELECT * FROM skills ORDER BY id DESC OFFSET $1 LIMIT $2`,
-    [offset, limit]
+    [offset, limit],
   );
   return result.rows;
 }

@@ -28,6 +28,14 @@ export interface Task {
   created_at: Date;
   updated_at: Date;
 }
+export interface TaskProgress {
+  id: number;
+  task_id: number;
+  provider_id: number;
+  description: string;
+  created_at: Date;
+  updated_at: Date;
+}
 
 export async function createTask(task: Partial<Task>): Promise<Task> {
   const result = await pool.query(
@@ -50,10 +58,16 @@ export async function createTask(task: Partial<Task>): Promise<Task> {
 }
 
 // List all tasks with pagination
-export async function listTasks({ offset, limit }: { offset: number, limit: number }) {
+export async function listTasks({
+  offset,
+  limit,
+}: {
+  offset: number;
+  limit: number;
+}) {
   const result = await pool.query(
     `SELECT * FROM tasks ORDER BY id DESC OFFSET $1 LIMIT $2`,
-    [offset, limit]
+    [offset, limit],
   );
   return result.rows;
 }
@@ -81,6 +95,18 @@ export async function updateTask(
   const result = await pool.query(
     `UPDATE tasks SET ${fields} WHERE id = $1 RETURNING *`,
     values,
+  );
+  return result.rows[0];
+}
+
+export async function updateTaskProgress(
+  progress: Partial<TaskProgress>,
+): Promise<TaskProgress> {
+  const result = await pool.query(
+    `INSERT INTO task_progress (task_id, provider_id, description)
+     VALUES ($1, $2, $3)
+     RETURNING *`,
+    [progress.task_id, progress.provider_id, progress.description],
   );
   return result.rows[0];
 }

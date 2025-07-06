@@ -17,7 +17,7 @@ const applyValidation = (
       const errorDetails = errors.array();
       res.status(httpStatusCode).json({
         error: "Validation failed",
-        details: errorDetails
+        details: errorDetails,
       });
       return;
     }
@@ -62,16 +62,13 @@ export const validateCreateSkillRequest = () => {
     body("hourly_rate").isNumeric().notEmpty(),
     applyValidation(),
   ];
-}
+};
 
-export const validateUpdateSkillRequest = validateCreateSkillRequest
+export const validateUpdateSkillRequest = validateCreateSkillRequest;
 
 export const validateGetSkillByIdRequest = () => {
-  return [
-    param("id").isInt(),
-    applyValidation(),
-  ];
-}
+  return [param("id").isInt(), applyValidation()];
+};
 
 export const validateCreateTaskRequest = () => {
   return [
@@ -84,23 +81,20 @@ export const validateCreateTaskRequest = () => {
     body("expected_hours").optional().isNumeric().notEmpty(),
     applyValidation(),
   ];
-}
+};
 
-export const validateUpdateTaskRequest = validateCreateTaskRequest
+export const validateUpdateTaskRequest = validateCreateTaskRequest;
 
 export const validateGetTaskByIdRequest = () => {
-  return [
-    param("id").isInt(),
-    applyValidation(),
-  ];
-}
+  return [param("id").isInt(), applyValidation()];
+};
 
 export const validateGetSkillsRequest = () => {
   return [
-    query(["page", "limit"]).optional().isInt({ min: 1 , max: 100  }),
+    query(["page", "limit"]).optional().isInt({ min: 1, max: 100 }),
     applyValidation(),
   ];
-}
+};
 
 export const validateUpdateOrderStatusRequest = () => {
   return [
@@ -108,4 +102,12 @@ export const validateUpdateOrderStatusRequest = () => {
     body("status").isIn(Object.values(OfferStatus)),
     applyValidation(),
   ];
-}
+};
+
+export const validateUpdateTaskProgressRequest = () => {
+  return [
+    param("id").isInt(),
+    body("description").isString().notEmpty(),
+    applyValidation(),
+  ];
+};

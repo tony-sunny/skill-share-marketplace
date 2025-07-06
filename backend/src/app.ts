@@ -9,20 +9,20 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console()
-  ],
-  format: winston.format.json()
-}));
+app.use(
+  expressWinston.logger({
+    transports: [new winston.transports.Console()],
+    format: winston.format.json(),
+  }),
+);
 
 app.use(router);
 
-app.use(expressWinston.errorLogger({
-  transports: [
-    new winston.transports.Console()
-  ],
-  format: winston.format.json()
-}));
+app.use(
+  expressWinston.errorLogger({
+    transports: [new winston.transports.Console()],
+    format: winston.format.json(),
+  }),
+);
 
 export default app;

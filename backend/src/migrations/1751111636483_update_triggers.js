@@ -43,7 +43,7 @@ export const up = (pgm) => {
     FOR EACH ROW
     EXECUTE FUNCTION set_current_timestamp_updated_at();
   `);
-}
+};
 
 export const down = (pgm) => {
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON users;`);
@@ -52,4 +52,4 @@ export const down = (pgm) => {
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON offers;`);
   pgm.sql(`DROP TRIGGER IF EXISTS set_updated_at ON task_progress;`);
   pgm.sql(`DROP FUNCTION IF EXISTS set_current_timestamp_updated_at;`);
-}
+};

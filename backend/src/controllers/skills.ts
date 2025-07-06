@@ -8,11 +8,13 @@ export const createSkill = async (req: RequestWithSession, res: Response) => {
     const skill = {
       ...req.body,
       user_id: req.session?.id,
-    }
+    };
     await skillModel.createSkill(skill);
-    res.status(constants.HTTP_STATUS_CREATED).end()
+    res.status(constants.HTTP_STATUS_CREATED).end();
   } catch (e) {
-    res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({ error: "Create skill failed", details: e });
+    res
+      .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
+      .json({ error: "Create skill failed", details: e });
   }
 };
 
@@ -21,11 +23,15 @@ export const updateSkill = async (req: RequestWithSession, res: Response) => {
     const skillId = Number(req.params.id);
     const skill = await skillModel.getSkillById(skillId);
     if (!skill) {
-      res.status(constants.HTTP_STATUS_NOT_FOUND).json({ error: "Skill not found" });
+      res
+        .status(constants.HTTP_STATUS_NOT_FOUND)
+        .json({ error: "Skill not found" });
       return;
     }
     if (skill.user_id !== req.session?.id) {
-      res.status(constants.HTTP_STATUS_FORBIDDEN).json({ error: "You are not allowed to update this skill" });
+      res
+        .status(constants.HTTP_STATUS_FORBIDDEN)
+        .json({ error: "You are not allowed to update this skill" });
       return;
     }
     const updatedSkill = await skillModel.updateSkill(skillId, {
@@ -34,7 +40,9 @@ export const updateSkill = async (req: RequestWithSession, res: Response) => {
     });
     res.status(constants.HTTP_STATUS_CREATED).json(updatedSkill);
   } catch (e) {
-    res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({ error: "Update skill failed", details: e });
+    res
+      .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
+      .json({ error: "Update skill failed", details: e });
   }
 };
 
@@ -45,9 +53,9 @@ export const listSkills = async (req: Request, res: Response) => {
     const offset = (page - 1) * limit;
     const [skills, total] = await Promise.all([
       skillModel.listSkills({ offset, limit }),
-      skillModel.countSkills()
+      skillModel.countSkills(),
     ]);
-    const mappedSkills = skills.map(skill => ({
+    const mappedSkills = skills.map((skill) => ({
       id: skill.id,
       category: skill.category,
       experience: skill.experience,
@@ -61,11 +69,13 @@ export const listSkills = async (req: Request, res: Response) => {
         page,
         limit,
         total,
-        total_pages: Math.ceil(total / limit)
-      }
+        total_pages: Math.ceil(total / limit),
+      },
     });
   } catch (e) {
-    res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({ error: "List skills failed", details: e });
+    res
+      .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
+      .json({ error: "List skills failed", details: e });
   }
 };
 
@@ -75,7 +85,9 @@ export const getSkillById = async (req: Request, res: Response) => {
     const skill = await skillModel.getSkillById(id);
 
     if (!skill) {
-      res.status(constants.HTTP_STATUS_NOT_FOUND).json({ error: "Skill not found" });
+      res
+        .status(constants.HTTP_STATUS_NOT_FOUND)
+        .json({ error: "Skill not found" });
       return;
     }
     const mappedSkill = {
@@ -84,9 +96,11 @@ export const getSkillById = async (req: Request, res: Response) => {
       experience: skill.experience,
       nature_of_work: skill.nature_of_work,
       hourly_rate: skill.hourly_rate,
-    }
+    };
     res.status(constants.HTTP_STATUS_OK).json(mappedSkill);
   } catch (e) {
-    res.status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR).json({ error: "Get skill failed", details: e });
+    res
+      .status(constants.HTTP_STATUS_INTERNAL_SERVER_ERROR)
+      .json({ error: "Get skill failed", details: e });
   }
 };

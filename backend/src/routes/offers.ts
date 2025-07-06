@@ -6,23 +6,22 @@ import { validateUpdateOrderStatusRequest } from "../middlewares/validations";
 
 const offerRouter = Router({ mergeParams: true });
 
-offerRouter.route("/offers")
-  .get(
-    validateJWT,
-    offerController.listOffers
-  )
+offerRouter
+  .route("/offers")
+  .get(validateJWT, offerController.listOffers)
   .post(
     validateJWT,
     validateRole(UserRole.Provider),
-    offerController.createOffer
+    offerController.createOffer,
   );
 
-offerRouter.route("/offers/:id/status")
+offerRouter
+  .route("/offers/:id/status")
   .patch(
     validateJWT,
     validateRole(UserRole.User),
     validateUpdateOrderStatusRequest(),
-    offerController.updateOfferStatus
+    offerController.updateOfferStatus,
   );
 
 export default offerRouter;
