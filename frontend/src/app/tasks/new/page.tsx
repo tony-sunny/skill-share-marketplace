@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { RequireAuth } from "../../../lib/require-auth";
@@ -16,6 +16,12 @@ export default function NewTaskPage() {
     rate_currency: "AUD",
   });
   const router = useRouter();
+
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

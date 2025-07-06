@@ -42,7 +42,7 @@ export default function RootLayout({
             </span>
           </nav>
           {children}
-          <Toaster richColors />
+          <Toaster richColors visibleToasts={1} />
         </UserProvider>
       </body>
     </html>

@@ -38,6 +38,10 @@ export default function OffersPage() {
       .catch(() => {
         toast.error("Failed to get offers");
       });
+
+    return () => {
+      toast.dismiss();
+    };
   }, []);
 
   return (

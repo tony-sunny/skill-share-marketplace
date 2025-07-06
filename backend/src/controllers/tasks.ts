@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { constants } from "node:http2";
 
 import * as taskModel from "../models/task";
+import * as offerModel from "../models/offer";
 import type { RequestWithSession } from "../middlewares/auth";
 
 export const createTask = async (req: RequestWithSession, res: Response) => {
@@ -128,6 +129,11 @@ export const updateTaskProgress = async (
     description: req.body.description,
   };
   try {
+    const assigned = await offerModel.isTaskAssignedToProvider(updateReq.task_id, updateReq.provider_id!);
+    if (!assigned) {
+      res.status(constants.HTTP_STATUS_FORBIDDEN).json({ error: "Task is not assigned to this provider" });
+      return;
+    }
     await taskModel.updateTaskProgress(updateReq);
     res.status(constants.HTTP_STATUS_OK).end();
   } catch (e) {

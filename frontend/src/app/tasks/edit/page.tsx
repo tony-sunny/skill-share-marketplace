@@ -34,6 +34,10 @@ export default function EditTaskPage() {
         toast.error("Failed to load task");
         setLoading(false);
       });
+
+    return () => {
+      toast.dismiss();
+    };
   }, [taskId]);
 
   const handleChange = (

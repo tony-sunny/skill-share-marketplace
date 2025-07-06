@@ -18,6 +18,10 @@ export default function SkillsPage() {
       .catch(() => {
         toast.error("Failed to get skills");
       });
+
+    return () => {
+      toast.dismiss();
+    };
   }, []);
 
   return (
@@ -59,6 +63,6 @@ export default function SkillsPage() {
           ))}
         </ul>
       </div>
-    </RequireAuth >
+    </RequireAuth>
   );
 }

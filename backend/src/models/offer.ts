@@ -64,3 +64,11 @@ export async function listOffersFromProvider(providerId: number) {
   );
   return result.rows;
 }
+
+export async function isTaskAssignedToProvider(task_id: number, provider_id: number): Promise<boolean> {
+  const result = await pool.query(
+    `SELECT 1 FROM offers WHERE task_id = $1 AND provider_id = $2 AND status = ${OfferStatus.Accepted} LIMIT 1`,
+    [task_id, provider_id]
+  );
+  return (result.rowCount ?? 0) > 0;
+}

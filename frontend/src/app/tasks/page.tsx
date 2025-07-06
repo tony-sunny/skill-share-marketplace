@@ -20,6 +20,10 @@ export default function TasksPage() {
       .catch(() => {
         toast.error("Failed to get tasks");
       });
+
+    return () => {
+      toast.dismiss();
+    };
   }, []);
 
   const handleOfferSubmit = async (taskId: number) => {

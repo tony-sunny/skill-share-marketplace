@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { RequireAuth } from "../../../lib/require-auth";
@@ -13,6 +13,12 @@ export default function NewSkillPage() {
     hourly_rate: "",
   });
   const router = useRouter();
+
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
 
   const handleNewSkillChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

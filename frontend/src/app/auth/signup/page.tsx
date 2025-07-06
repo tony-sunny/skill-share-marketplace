@@ -1,11 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { queryAPI } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+    };
+  }, []);
+
   const router = useRouter();
+
   const [form, setForm] = useState({
     email: "",
     password: "",

@@ -24,6 +24,10 @@ export default function EditSkillPage() {
         toast.error("Failed to load skill");
         setLoading(false);
       });
+
+    return () => {
+      toast.dismiss();
+    };
   }, [skillId]);
 
   const handleChange = (
